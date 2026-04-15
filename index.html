@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diktier-App Deutsch</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <h1>Diktier-App Deutsch</h1>
+    <p class="intro">
+      Lies deinen Text langsam und deutlich vor. Die App schreibt mit.
+    </p>
+
+    <div class="controls">
+      <button id="startBtn" type="button">Aufnahme starten</button>
+      <button id="stopBtn" type="button" disabled>Aufnahme stoppen</button>
+      <button id="copyBtn" type="button">Text kopieren</button>
+      <button id="clearBtn" type="button">Text löschen</button>
+    </div>
+
+    <div class="status-wrap">
+      <span id="status" class="status">Bereit</span>
+      <span id="supportInfo" class="support-info"></span>
+    </div>
+
+    <label for="output" class="label">Transkribierter Text</label>
+    <textarea
+      id="output"
+      placeholder="Hier erscheint der gesprochene Text ..."
+      spellcheck="true"
+    ></textarea>
+
+    <p class="hint">
+      Hinweis: Rechtschreibung und Satzzeichen hängen von der Browser-Spracherkennung ab.
+      Grammatik wird nicht geprüft.
+    </p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
