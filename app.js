@@ -31,15 +31,16 @@
 
     t = t.charAt(0).toUpperCase() + t.slice(1);
 
-    t = t.replace(/([.!?]\s+)([a-zäöü])/g, (_, p1, p2) => {
-      return p1 + p2.toUpperCase();
+    t = t.replace(/([.!?]\s+)([a-zäöü])/g, (_, start, letter) => {
+      return start + letter.toUpperCase();
     });
 
     return t;
   }
 
-  function updateTextarea() {
-    output.value = normalizeText(finalTranscript);
+  function refreshOutput(interimTranscript = "") {
+    const combined = finalTranscript + interimTranscript;
+    output.value = normalizeText(combined);
   }
 
   function initRecognition() {
@@ -70,7 +71,7 @@
       setStatus("Bereit");
       startBtn.disabled = false;
       stopBtn.disabled = true;
-      updateTextarea();
+      refreshOutput();
     };
 
     recognition.onerror = (event) => {
@@ -105,7 +106,7 @@
         finalTranscript += newFinal;
       }
 
-      output.value = normalizeText(finalTranscript + interimTranscript);
+      refreshOutput(interimTranscript);
     };
   }
 
@@ -128,13 +129,17 @@
 
       setStatus("Text wurde kopiert");
     } catch (error) {
-      setStatus("Kopieren nicht möglich");
       console.error(error);
+      setStatus("Kopieren nicht möglich");
     }
   }
 
   startBtn.addEventListener("click", () => {
     if (!recognition) return;
+
+    if (!isRecording) {
+      finalTranscript = output.value.trim() ? output.value.trim() + " " : "";
+    }
 
     try {
       recognition.start();
